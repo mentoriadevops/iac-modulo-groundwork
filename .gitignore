@@ -27,3 +27,18 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 # example: *tfplan*
+notas.txt
+.terraform.lock.hcl
+tf.plan
+terraform_1.0.0_linux_amd64.zip
+terraform
+
+google-cloud-sdk-*
+google-cloud-sdk/
+
+terraform.inc
+tfplan
+
+# Ignore the following files about keys to connect to GCP
+key.json
+keys.json
