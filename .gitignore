@@ -1,5 +1,5 @@
 # Local .terraform directories
-**/.terraform/*
+**/.terraform/
 
 # .tfstate files
 *.tfstate
@@ -38,7 +38,10 @@ google-cloud-sdk/
 
 terraform.inc
 tfplan
+testing.tfvars
 
 # Ignore the following files about keys to connect to GCP
 key.json
 keys.json
+cred.json
+creds.json

@@ -1,14 +1,8 @@
-provider "google" {
-  project = var.project
-  region  = "us-central1"
-}
-
 module "network_gcp" {
   source  = "github.com/mentoriaiac/iac-modulo-rede-gcp.git"
   project = var.project
   vpc_name = var.vpc_name
   subnetworks = var.subnetworks
-
   firewall_allow = var.firewall_allow
 }
 
@@ -28,4 +22,4 @@ module "network_gcp" {
 #   disable_services_on_destroy = false
 
 #   activate_apis = var.activate_apis
-}
+# }

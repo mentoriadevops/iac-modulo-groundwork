@@ -18,14 +18,12 @@
 #   value = module.project_factory.project_number
 # }
 
-# output "vpc_id" {
-#   description = "Retorna o id da VPC criada"
-#   value       = google_compute_network.vpc_network.id
-#   sensitive   = false
-# }
+output "vpc_id" {
+  description = "Retorna o id da VPC criada"
+  value       = module.network_gcp.vpc_id
+}
 
-# output "subnets_id" {
-#   description = "Retorna uma lista de objetos com os atributos das subnets criadas"
-#   value       = [for subnet in google_compute_subnetwork.subnetworks : subnet]
-#   sensitive   = false
-# }
+output "subnets_id" {
+  description = "Retorna uma lista de objetos com os atributos das subnets criadas"
+  value       = module.network_gcp.subnets_id
+}

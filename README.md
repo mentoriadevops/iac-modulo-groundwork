@@ -1,4 +1,4 @@
-# IAC Modulo Projeto GCP
+# IAC Módulo Groundwork GCP
 
 
 ## Passo-a-passo para criar uma service account para o Terraform
@@ -6,25 +6,20 @@
 - [Instalação do gcloud](https://cloud.google.com/sdk/docs/install#installation_instructions)
 - [Tutorial](https://cloud.google.com/community/tutorials/managing-gcp-projects-with-terraform)
 
-```sh
-export TF_ADMIN=terraform-user-abcqw
-export TF_CREDS=~/.config/gcloud/terraform-user.json
+Após instalar o utilitário gcloud, executar os passos abaixo via make para criar a conta de serviço, as policies e o arquivo de chave para autenticar no GCP.
 
-#export TF_VAR_org_id=YOUR_ORG_ID # `gcloud organizations list`
-#export TF_VAR_billing_account=YOUR_BILLING_ACCOUNT_ID # `gcloud beta billing accounts list`
+```bash
+## 1: Criar Service Account no GCP
+make auth-create-sa
 
-export TF_VAR_org_id=${YOUR_ORG_ID}
-export TF_VAR_billing_account=YOUR_BILLING_ACCOUNT_ID
+## 2: create policy
+make auth-create-iam-policy
 
-gcloud projects create ${TF_ADMIN} \
-  --organization ${TF_VAR_org_id} \
-  --set-as-default
+## 3: add policy
+make auth-create-add-policy
 
-gcloud iam service-accounts create terraform \
-  --display-name "Terraform admin account"
-
-gcloud iam service-accounts keys create ${TF_CREDS} \
-  --iam-account terraform@${TF_ADMIN}.iam.gserviceaccount.com  
+## 4: generate creds file
+make auth-create-creds-file
 ```
 
 <!-- BEGIN_TF_DOCS -->
@@ -32,41 +27,42 @@ gcloud iam service-accounts keys create ${TF_CREDS} \
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13.0 |
-| google | 3.81.0 |
+| terraform | >= 1.0.0 |
+| [iac-modulo-rede-gcp](https://github.com/mentoriaiac/iac-modulo-rede-gcp) | ??? |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| google | 3.81.0 |
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [google_billing_account.acct](https://registry.terraform.io/providers/hashicorp/google/3.81.0/docs/data-sources/billing_account) | data source |
-| [google_organization.org](https://registry.terraform.io/providers/hashicorp/google/3.81.0/docs/data-sources/organization) | data source |
+| google | 3.73.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| google\_billing\_account\_display\_name | The display name of the billing account. | `string` | n/a | yes |
-| google\_organization\_domain\_name | The domain name of the Organization. | `string` | n/a | yes |
-| google\_project\_name | The name of the project. | `string` | n/a | yes |
-| activate\_apis | Lista das apis que serão ativadas no projeto do GCP. | `list(string)` | `[]` | no |
+| project | Nome do projeto existente no google cloud. | `string` | n/a | yes |
+| vpc_name | Nome da VPC. | `string` | n/a | yes |
+| subnetworks | Lista do objeto de network. | `list(object({}))` | n/a | yes |
+| firewall_allow | Lista de portas para permitir no firewall. | `list(object({}))` | `[]` | yes |
+| mtu | Unidades máximas de unidades de transmissão em bytes. | `number` | 1460 | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| google\_billing\_account | n/a |
-| google\_org\_id | n/a |
-| project\_id | n/a |
-| project\_name | n/a |
-| project\_number | n/a |
+| vpc_id | Retorna o id da VPC criada. |
+| subnets_id | Retorna uma lista de objetos com os atributos das subnets criadas. |
 <!-- END_TF_DOCS -->
 ## Testar localmente
 
-Para testar o modulo localmente, você pode executar um `make test`.
+1. Gerar credenciais do GCP.
+1. Editar `.target.env`.
+1. Editar `terrafile.tf`.
+1. Executar `make plan`.
+1. Executar `make apply`.
+1. Executar `make destroy`.
+
+Contribuidores:
+- snifbr
+- mdmansur
+- edson c.

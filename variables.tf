@@ -36,14 +36,13 @@
 #     error_message = "Valid values for var: cloud_provider are (GCP)."
 #   }
 # }
-
-variable "vpc_name" {
-  description = "nome da vpc"
+variable "project" {
+  description = "Nome do projeto existente no google cloud"
   type        = string
 }
 
-variable "project" {
-  description = "nome do projeto existente no google cloud"
+variable "vpc_name" {
+  description = "Nome da vpc"
   type        = string
 }
 
