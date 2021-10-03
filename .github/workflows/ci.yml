@@ -1,0 +1,33 @@
+name: "Terraform"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Unit Tests"
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Validate
+        id: validate
+        run: make terraform-init terraform-validate
+
+      - name: Terraform Plan
+        id: plan
+        run: make plan
+
+      - name: Terraform Test
+        id: test
+        run: make test    
