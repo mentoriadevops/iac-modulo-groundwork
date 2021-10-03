@@ -1,8 +1,8 @@
 module "network_gcp" {
-  source  = "github.com/mentoriaiac/iac-modulo-rede-gcp.git"
-  project = var.project
-  vpc_name = var.vpc_name
-  subnetworks = var.subnetworks
+  source         = "github.com/mentoriaiac/iac-modulo-rede-gcp.git?ref=v0.1.0"
+  project        = var.project
+  vpc_name       = var.vpc_name
+  subnetworks    = var.subnetworks
   firewall_allow = var.firewall_allow
 }
 
