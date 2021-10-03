@@ -33,13 +33,20 @@ auth-create-iam-policy: ## 2: create policy
 	gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
     --member=serviceAccount:${GCP_TERRAFORM_SA}@${GCP_PROJECT}.iam.gserviceaccount.com \
     --role=roles/compute.instanceAdmin.v1
-
-auth-create-add-policy: ## 3: add policy
+	gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:${GCP_TERRAFORM_SA}@${GCP_PROJECT}.iam.gserviceaccount.com \
+    --role=roles/compute.securityAdmin
 	gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
     --member=serviceAccount:${GCP_TERRAFORM_SA}@${GCP_PROJECT}.iam.gserviceaccount.com \
     --role=roles/iam.serviceAccountUser
 
-auth-create-creds-file: ## 4: generate creds file
+auth-create-iam-policy-delete: ## 2: create policy
+	gcloud projects add-iam-policy-binding ${GCP_PROJECT} \
+    --member=serviceAccount:${GCP_TERRAFORM_SA}@${GCP_PROJECT}.iam.gserviceaccount.com \
+    --role=roles/compute.networkAdmin
+
+
+auth-create-creds-file: ## 3: generate creds file
 	gcloud iam service-accounts \
 		keys create key.json \
 		--iam-account=${GCP_TERRAFORM_SA}@${GCP_PROJECT}.iam.gserviceaccount.com
