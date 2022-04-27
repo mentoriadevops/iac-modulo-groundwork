@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Terraform Valida Modulo"
 
 on:
   push:
@@ -8,26 +8,7 @@ on:
 
 jobs:
   terraform:
-    name: "Unit Tests"
-    runs-on: ubuntu-18.04
+    uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_valida_modulo.yaml@v0.1.0"
+    secrets:
+      token: ${{ secrets.TOKEN }}
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check
-        continue-on-error: true
-
-      - name: Terraform Validate
-        id: validate
-        run: make terraform-init terraform-validate
-
-      - name: Terraform Plan
-        id: plan
-        run: make plan
-
-      - name: Terraform Test
-        id: test
-        run: make test    
